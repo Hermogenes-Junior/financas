@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>FinançasPro – Login</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/login.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div class="login-bg">
+    <div class="grain"></div>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+  </div>
+
+  <main class="login-container">
+    <div class="login-card">
+      <div class="brand">
+        <span class="brand-icon">₿</span>
+        <h1 class="brand-name">Finanças<span>Pro</span></h1>
+      </div>
+      <p class="brand-tagline">Controle. Clareza. Crescimento.</p>
+
+      <div id="alert-box" class="alert hidden"></div>
+
+      <!-- Tab -->
+      <div class="tab-group" id="tab-group">
+        <button class="tab active" data-tab="login">Entrar</button>
+        <button class="tab" data-tab="register">Criar conta</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form active-form">
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" id="login-email" placeholder="seu@email.com" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <div class="input-wrap">
+            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"
+              required />
+            <button type="button" class="eye-btn" onclick="togglePass('login-password', this)">👁</button>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" id="login-btn">
+          <span>Entrar</span>
+          <div class="spinner hidden"></div>
+        </button>
+
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form">
+        <div class="field">
+          <label>Nome completo</label>
+          <input type="text" id="reg-name" placeholder="Seu nome" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" id="reg-email" placeholder="seu@email.com" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <div class="input-wrap">
+            <input type="password" id="reg-password" placeholder="Mín. 8 caracteres" autocomplete="new-password"
+              required />
+            <button type="button" class="eye-btn" onclick="togglePass('reg-password', this)">👁</button>
+          </div>
+          <div class="strength-bar" id="strength-bar">
+            <div class="fill"></div>
+          </div>
+          <span class="strength-label" id="strength-label"></span>
+        </div>
+        <div class="field">
+          <label>Confirmar senha</label>
+          <div class="input-wrap">
+            <input type="password" id="reg-confirm" placeholder="Repita a senha" autocomplete="new-password" required />
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" id="register-btn">
+          <span>Criar conta</span>
+          <div class="spinner hidden"></div>
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <script src="../js/db.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+
+</html>

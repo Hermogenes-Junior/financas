@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>FinançasPro – Dashboard</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="brand-icon">₿</span>
+      <span class="brand-name">Finanças<span>Pro</span></span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-view="overview">
+        <span class="nav-icon">◈</span> Visão Geral
+      </a>
+      <a href="#" class="nav-item" data-view="transactions">
+        <span class="nav-icon">↕</span> Transações
+      </a>
+      <a href="#" class="nav-item" data-view="cashflow">
+        <span class="nav-icon">◎</span> Fluxo de Caixa
+      </a>
+      <a href="#" class="nav-item" data-view="reports">
+        <span class="nav-icon">◐</span> Relatórios
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-pill" id="user-pill">
+        <div class="user-avatar" id="user-avatar">J</div>
+        <div>
+          <div class="user-name" id="user-name">Usuário</div>
+          <div class="user-role">Empreendedor</div>
+        </div>
+      </div>
+      <button class="logout-btn" id="logout-btn" title="Sair">⏻</button>
+    </div>
+  </aside>
+
+  <!-- MOBILE TOP BAR -->
+  <header class="mobile-header">
+    <button class="hamburger" id="hamburger">☰</button>
+    <span class="brand-name" style="font-size:1.1rem">Finanças<span>Pro</span></span>
+    <button class="logout-btn" id="logout-btn-mobile">⏻</button>
+  </header>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- ===== OVERVIEW ===== -->
+    <section id="view-overview" class="view active-view">
+      <div class="page-header">
+        <h2 class="page-title">Visão Geral</h2>
+        <div class="period-select">
+          <select id="period-filter">
+            <option value="thisMonth">Este mês</option>
+            <option value="lastMonth">Mês passado</option>
+            <option value="thisYear">Este ano</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- CARDS -->
+      <div class="cards-grid">
+        <div class="card card-income">
+          <div class="card-label">Receita Total</div>
+          <div class="card-value" id="total-income">R$ 0,00</div>
+          <div class="card-sub" id="income-count">0 entradas</div>
+        </div>
+        <div class="card card-expense">
+          <div class="card-label">Despesa Total</div>
+          <div class="card-value" id="total-expense">R$ 0,00</div>
+          <div class="card-sub" id="expense-count">0 saídas</div>
+        </div>
+        <div class="card card-profit">
+          <div class="card-label">Lucro Líquido</div>
+          <div class="card-value" id="net-profit">R$ 0,00</div>
+          <div class="card-badge" id="profit-badge">—</div>
+        </div>
+        <div class="card card-fixed">
+          <div class="card-label">Custo Fixo</div>
+          <div class="card-value" id="fixed-cost">R$ 0,00</div>
+          <div class="card-sub">Recorrente mensal</div>
+        </div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Receita × Despesa</div>
+          <canvas id="barChart" height="220"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Despesas por Categoria</div>
+          <canvas id="pieChart" height="220"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TRANSACTIONS ===== -->
+    <section id="view-transactions" class="view">
+      <div class="page-header">
+        <h2 class="page-title">Transações</h2>
+        <button class="btn-add" id="btn-open-modal">+ Nova</button>
+      </div>
+
+      <div class="filters-bar">
+        <input type="text" id="search-tx" placeholder="🔍  Buscar..." class="search-input" />
+        <select id="filter-type">
+          <option value="">Todos</option>
+          <option value="income">Receita</option>
+          <option value="expense">Despesa</option>
+        </select>
+        <select id="filter-cost">
+          <option value="">Custo</option>
+          <option value="fixed">Fixo</option>
+          <option value="variable">Variável</option>
+        </select>
+      </div>
+
+      <div class="tx-list" id="tx-list">
+        <div class="empty-state">Nenhuma transação ainda.<br />Clique em <strong>+ Nova</strong> para começar.</div>
+      </div>
+    </section>
+
+    <!-- ===== CASHFLOW ===== -->
+    <section id="view-cashflow" class="view">
+      <div class="page-header">
+        <h2 class="page-title">Fluxo de Caixa</h2>
+      </div>
+      <div class="cashflow-summary" id="cashflow-summary"></div>
+      <div class="chart-card full-width">
+        <div class="chart-title">Projeção dos próximos 6 meses</div>
+        <canvas id="cashflowChart" height="260"></canvas>
+      </div>
+      <div class="chart-card full-width" style="margin-top:1rem">
+        <div class="chart-title">Custo Fixo × Variável</div>
+        <canvas id="costTypeChart" height="200"></canvas>
+      </div>
+    </section>
+
+    <!-- ===== REPORTS ===== -->
+    <section id="view-reports" class="view">
+      <div class="page-header">
+        <h2 class="page-title">Relatórios</h2>
+        <button class="btn-add" id="btn-export-csv">⬇ Exportar CSV</button>
+      </div>
+      <div class="report-table-wrap">
+        <table class="report-table" id="report-table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Tipo</th>
+              <th>Custo</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody id="report-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: NOVA/EDITAR TRANSAÇÃO -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Nova Transação</h3>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <form id="tx-form">
+        <input type="hidden" id="tx-id" />
+        <div class="modal-grid">
+          <div class="field">
+            <label>Descrição *</label>
+            <input type="text" id="tx-description" placeholder="Ex: Aluguel, Venda..." required />
+          </div>
+          <div class="field">
+            <label>Valor (R$) *</label>
+            <input type="number" id="tx-amount" placeholder="0,00" step="0.01" min="0.01" required />
+          </div>
+          <div class="field">
+            <label>Tipo *</label>
+            <select id="tx-type" required>
+              <option value="income">Receita</option>
+              <option value="expense">Despesa</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Categoria</label>
+            <input type="text" id="tx-category" placeholder="Ex: Serviços, Contas..." list="cat-list" />
+            <datalist id="cat-list">
+              <option value="Serviços"></option>
+              <option value="Aluguel"></option>
+              <option value="Alimentação"></option>
+              <option value="Marketing"></option>
+              <option value="Salários"></option>
+              <option value="Fornecedores"></option>
+              <option value="Impostos"></option>
+              <option value="Outros"></option>
+            </datalist>
+          </div>
+          <div class="field">
+            <label>Custo</label>
+            <select id="tx-costtype">
+              <option value="variable">Variável</option>
+              <option value="fixed">Fixo</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Data</label>
+            <input type="date" id="tx-date" required />
+          </div>
+          <div class="field full">
+            <label>Observação</label>
+            <textarea id="tx-note" placeholder="Observação opcional..." rows="2"></textarea>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="modal-cancel">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/db.js"></script>
+  <script src="../js/dashboard.js"></script>
+  <script src="../js/charts.js"></script>
+</body>
+
+</html>

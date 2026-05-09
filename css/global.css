@@ -1,0 +1,156 @@
+/* ==========================================
+   GLOBAL.CSS – FinançasPro
+   Design: Dark finance / editorial bold
+   ========================================== */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Palette */
+  --bg:        #0b0d11;
+  --surface:   #12151c;
+  --surface2:  #1a1e28;
+  --border:    rgba(255,255,255,0.07);
+  --accent:    #c8f060;
+  --accent2:   #60d4f0;
+  --danger:    #f05060;
+  --income:    #60f0a0;
+  --text:      #e8eaf0;
+  --muted:     #6b7180;
+
+  /* Typography */
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+
+  /* Shadows */
+  --shadow: 0 4px 32px rgba(0,0,0,0.4);
+  --shadow-accent: 0 0 24px rgba(200,240,96,0.15);
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+input, select, textarea, button {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ---- SCROLLBAR ---- */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 99px; }
+
+/* ---- UTILITIES ---- */
+.hidden { display: none !important; }
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #0b0d11;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+  width: 100%;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 24px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: background .2s;
+}
+.btn-secondary:hover { background: var(--surface); }
+
+.btn-add {
+  background: var(--accent);
+  color: #0b0d11;
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 9px 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: opacity .2s;
+  white-space: nowrap;
+}
+.btn-add:hover { opacity: 0.85; }
+
+/* ---- FIELD ---- */
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 0.8rem; font-weight: 500; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.field input,
+.field select,
+.field textarea {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  padding: 10px 12px;
+  transition: border-color .2s;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus { border-color: var(--accent); }
+.field textarea { resize: vertical; }
+.field select option { background: var(--surface); }
+
+/* ---- ALERT ---- */
+.alert {
+  padding: 11px 16px;
+  border-radius: var(--r-sm);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  border-left: 4px solid transparent;
+}
+.alert.error   { background: rgba(240,80,96,.15); border-color: var(--danger); color: #f8a0a8; }
+.alert.success { background: rgba(96,240,160,.1); border-color: var(--income); color: #90f0c0; }
+
+/* ---- SPINNER ---- */
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(0,0,0,0.3);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
